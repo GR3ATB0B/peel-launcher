@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Background -->
     <color name="peel_background">#000000</color>
+    <color name="peel_surface">#121212</color>
+
+    <!-- App tile colors -->
+    <color name="tile_phone">#00FF00</color>
+    <color name="tile_sms">#0000FF</color>
+    <color name="tile_camera">#808080</color>
+    <color name="tile_claude">#FF6600</color>
+
+    <!-- On-tile foreground -->
+    <color name="tile_icon">#FFFFFF</color>
+
+    <!-- Material defaults retained for system surfaces -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>
