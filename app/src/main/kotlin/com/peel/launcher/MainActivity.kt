@@ -1,11 +1,16 @@
 package com.peel.launcher
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.ViewConfiguration
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+@SuppressLint("ClickableViewAccessibility")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var launcher: AppLauncher
@@ -27,5 +32,12 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+        val root = findViewById<View>(R.id.root)
+        val touchSlop = ViewConfiguration.get(this).scaledTouchSlop * 4f
+        root.setOnTouchListener(SwipeDownDetector(slopPx = touchSlop) {
+            startActivity(Intent(this, ControlCenterActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, 0)
+        })
     }
 }

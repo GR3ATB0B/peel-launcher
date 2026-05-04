@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Peel</string>
     <string name="hello_peel">Peel</string>
+    <string name="control_center_title">Control Center</string>
 </resources>
