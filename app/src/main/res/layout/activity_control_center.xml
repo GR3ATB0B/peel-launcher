@@ -11,7 +11,7 @@
         android:id="@+id/control_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/peel_surface"
+        android:background="@color/peel_panel"
         android:orientation="vertical"
         android:padding="24dp"
         app:layout_constraintTop_toTopOf="parent">

@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Background -->
+    <!-- Surface -->
     <color name="peel_background">#000000</color>
-    <color name="peel_surface">#121212</color>
+    <color name="peel_panel">#0E0E0E</color>
+    <color name="peel_chip">#1A1A1A</color>
 
-    <!-- App tile colors -->
-    <color name="tile_phone">#00FF00</color>
-    <color name="tile_sms">#0000FF</color>
-    <color name="tile_camera">#808080</color>
-    <color name="tile_claude">#FF6600</color>
+    <!-- Tile palette -->
+    <color name="tile_phone">#1F3D2B</color>
+    <color name="tile_messages">#243349</color>
+    <color name="tile_camera">#2A2723</color>
+    <color name="tile_claude">#3D2418</color>
 
-    <!-- On-tile foreground -->
-    <color name="tile_icon">#FFFFFF</color>
+    <!-- Foreground -->
+    <color name="peel_text_primary">#FFFFFF</color>
+    <color name="peel_text_muted">#888888</color>
+    <color name="peel_text_faint">#444444</color>
+    <color name="peel_icon">#FFFFFF</color>
 
     <!-- Material defaults retained for system surfaces -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Temporary legacy alias so AppTile.kt still compiles until Task 3 renames SMS -> Messages. Removed in Task 3. -->
+    <color name="tile_sms">@color/tile_messages</color>
 </resources>

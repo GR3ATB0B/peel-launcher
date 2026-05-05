@@ -26,6 +26,6 @@
             android:layout_gravity="center"
             android:contentDescription="@null"
             android:src="@drawable/ic_phone"
-            app:tint="@color/tile_icon" />
+            app:tint="@color/peel_icon" />
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
