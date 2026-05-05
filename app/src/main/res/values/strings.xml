@@ -7,4 +7,7 @@
     <string name="volume">Volume</string>
     <string name="silent_mode_off">Silent: Off</string>
     <string name="silent_mode_on">Silent: On</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="settings">Settings</string>
 </resources>

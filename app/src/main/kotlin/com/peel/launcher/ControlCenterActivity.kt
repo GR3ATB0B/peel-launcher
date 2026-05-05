@@ -99,6 +99,16 @@ class ControlCenterActivity : AppCompatActivity() {
                 startActivity(Intent("android.settings.NOTIFICATION_POLICY_ACCESS_SETTINGS"))
             }
         }
+
+        findViewById<MaterialButton>(R.id.wifi_btn).setOnClickListener {
+            startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+        }
+        findViewById<MaterialButton>(R.id.bluetooth_btn).setOnClickListener {
+            startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
+        }
+        findViewById<MaterialButton>(R.id.settings_btn).setOnClickListener {
+            startActivity(Intent(Settings.ACTION_SETTINGS))
+        }
     }
 
     private fun currentSystemBrightness(): Int =
