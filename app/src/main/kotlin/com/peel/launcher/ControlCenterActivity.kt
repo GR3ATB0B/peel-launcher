@@ -1,10 +1,14 @@
 package com.peel.launcher
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.abs
 
@@ -18,12 +22,9 @@ class ControlCenterActivity : AppCompatActivity() {
         val scrim = findViewById<View>(R.id.control_scrim)
         val panel = findViewById<View>(R.id.control_panel)
 
-        // Tap on scrim (outside panel) -> dismiss
         scrim.setOnClickListener { finishWithFade() }
-        // Block taps on the panel itself from bubbling to scrim
         panel.setOnClickListener { /* consume */ }
 
-        // Swipe up anywhere -> dismiss
         val slop = ViewConfiguration.get(this).scaledTouchSlop * 4f
         scrim.setOnTouchListener(object : View.OnTouchListener {
             private var downY = 0f
@@ -35,14 +36,39 @@ class ControlCenterActivity : AppCompatActivity() {
                             finishWithFade()
                             return true
                         }
-                        // Treat as tap on scrim
                         v?.performClick()
                     }
                 }
                 return false
             }
         })
+
+        val brightness = findViewById<SeekBar>(R.id.brightness_seek)
+        brightness.progress = currentSystemBrightness()
+        brightness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (!fromUser) return
+                if (!Settings.System.canWrite(this@ControlCenterActivity)) {
+                    startActivity(
+                        Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+                            .setData(Uri.parse("package:$packageName"))
+                    )
+                    return
+                }
+                Settings.System.putInt(
+                    contentResolver,
+                    Settings.System.SCREEN_BRIGHTNESS,
+                    progress.coerceIn(0, 255),
+                )
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
     }
+
+    private fun currentSystemBrightness(): Int =
+        try { Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS) }
+        catch (e: Settings.SettingNotFoundException) { 128 }
 
     private fun finishWithFade() {
         finish()
