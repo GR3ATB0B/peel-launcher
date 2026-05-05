@@ -3,6 +3,7 @@ package com.peel.launcher
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -14,6 +15,7 @@ class ColorPaletteTest {
 
     private fun resolve(name: String): Int {
         val id = ctx.resources.getIdentifier(name, "color", ctx.packageName)
+        if (id == 0) fail("Color resource not found: $name")
         return ContextCompat.getColor(ctx, id)
     }
 
