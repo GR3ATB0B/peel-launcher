@@ -1,8 +1,10 @@
 package com.peel.launcher
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewConfiguration
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
+        val gapPx = resources.getDimensionPixelSize(R.dimen.tile_gap)
+        grid.addItemDecoration(GridSpacingDecoration(gapPx))
 
         val touchSlop = ViewConfiguration.get(this).scaledTouchSlop * 4f
         swipeDetector = SwipeDownDetector(slopPx = touchSlop) {
@@ -42,5 +46,15 @@ class MainActivity : AppCompatActivity() {
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         swipeDetector.onTouch(null, event)
         return super.dispatchTouchEvent(event)
+    }
+
+    private class GridSpacingDecoration(private val gapPx: Int) : RecyclerView.ItemDecoration() {
+        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+            val position = parent.getChildAdapterPosition(view)
+            val column = position % 2
+            outRect.left = if (column == 0) 0 else gapPx / 2
+            outRect.right = if (column == 0) gapPx / 2 else 0
+            outRect.top = if (position < 2) 0 else gapPx
+        }
     }
 }
