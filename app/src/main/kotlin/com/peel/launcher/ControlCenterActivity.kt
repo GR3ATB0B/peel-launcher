@@ -1,7 +1,9 @@
 package com.peel.launcher
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -60,6 +62,18 @@ class ControlCenterActivity : AppCompatActivity() {
                     Settings.System.SCREEN_BRIGHTNESS,
                     progress.coerceIn(0, 255),
                 )
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
+
+        val audio = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val volume = findViewById<SeekBar>(R.id.volume_seek)
+        volume.max = audio.getStreamMaxVolume(AudioManager.STREAM_RING)
+        volume.progress = audio.getStreamVolume(AudioManager.STREAM_RING)
+        volume.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) audio.setStreamVolume(AudioManager.STREAM_RING, progress, 0)
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}

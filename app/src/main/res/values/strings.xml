@@ -4,4 +4,5 @@
     <string name="hello_peel">Peel</string>
     <string name="control_center_title">Control Center</string>
     <string name="brightness">Brightness</string>
+    <string name="volume">Volume</string>
 </resources>
