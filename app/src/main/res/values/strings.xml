@@ -5,4 +5,6 @@
     <string name="control_center_title">Control Center</string>
     <string name="brightness">Brightness</string>
     <string name="volume">Volume</string>
+    <string name="silent_mode_off">Silent: Off</string>
+    <string name="silent_mode_on">Silent: On</string>
 </resources>

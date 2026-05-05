@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 import kotlin.math.abs
 
 @SuppressLint("ClickableViewAccessibility")
@@ -78,6 +79,26 @@ class ControlCenterActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
+
+        val silentBtn = findViewById<MaterialButton>(R.id.silent_toggle)
+        fun refreshSilent() {
+            silentBtn.text = getString(
+                if (audio.ringerMode == AudioManager.RINGER_MODE_SILENT) R.string.silent_mode_on
+                else R.string.silent_mode_off
+            )
+        }
+        refreshSilent()
+        silentBtn.setOnClickListener {
+            try {
+                audio.ringerMode = if (audio.ringerMode == AudioManager.RINGER_MODE_NORMAL)
+                    AudioManager.RINGER_MODE_SILENT
+                else
+                    AudioManager.RINGER_MODE_NORMAL
+                refreshSilent()
+            } catch (e: SecurityException) {
+                startActivity(Intent("android.settings.NOTIFICATION_POLICY_ACCESS_SETTINGS"))
+            }
+        }
     }
 
     private fun currentSystemBrightness(): Int =
