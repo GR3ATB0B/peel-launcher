@@ -80,3 +80,6 @@ lint/tmp/
 # Editor
 .vscode/
 *.swp
+
+# Superpowers brainstorm sessions
+.superpowers/
