@@ -1,6 +1,8 @@
 package com.peel.launcher
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -29,6 +31,25 @@ class AppTileAdapter(
         holder.icon.setImageResource(tile.iconRes)
         holder.icon.contentDescription = tile.label
         holder.tile.setOnClickListener { onTileClick(tile) }
+        attachPressAnimation(holder.tile)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun attachPressAnimation(view: View) {
+        view.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    v.animate().scaleX(0.96f).scaleY(0.96f).alpha(0.85f)
+                        .setDuration(120L).start()
+                }
+                MotionEvent.ACTION_UP,
+                MotionEvent.ACTION_CANCEL -> {
+                    v.animate().scaleX(1f).scaleY(1f).alpha(1f)
+                        .setDuration(180L).start()
+                }
+            }
+            false
+        }
     }
 
     override fun getItemCount(): Int = tiles.size
