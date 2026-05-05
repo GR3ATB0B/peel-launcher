@@ -31,7 +31,7 @@ class AppTileAdapterTest {
             0,
         )
         adapter.onBindViewHolder(holder, 2)
-        holder.itemView.performClick()
+        holder.tile.performClick()
 
         assertEquals(tiles[2], clicked)
     }

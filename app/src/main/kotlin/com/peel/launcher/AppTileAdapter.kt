@@ -3,10 +3,9 @@ package com.peel.launcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 
 class AppTileAdapter(
     private val tiles: List<AppTile>,
@@ -14,7 +13,7 @@ class AppTileAdapter(
 ) : RecyclerView.Adapter<AppTileAdapter.TileViewHolder>() {
 
     class TileViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val card: MaterialCardView = view.findViewById(R.id.tile_card)
+        val tile: FrameLayout = view.findViewById(R.id.tile_root)
         val icon: ImageView = view.findViewById(R.id.tile_icon)
     }
 
@@ -26,11 +25,10 @@ class AppTileAdapter(
 
     override fun onBindViewHolder(holder: TileViewHolder, position: Int) {
         val tile = tiles[position]
-        val ctx = holder.itemView.context
-        holder.card.setCardBackgroundColor(ContextCompat.getColor(ctx, tile.colorRes))
+        holder.tile.setBackgroundResource(tile.backgroundRes)
         holder.icon.setImageResource(tile.iconRes)
         holder.icon.contentDescription = tile.label
-        holder.itemView.setOnClickListener { onTileClick(tile) }
+        holder.tile.setOnClickListener { onTileClick(tile) }
     }
 
     override fun getItemCount(): Int = tiles.size

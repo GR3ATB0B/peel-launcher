@@ -12,6 +12,7 @@ class AppTileTest {
             packageName = "com.simplemobiletools.dialer",
             colorRes = android.R.color.holo_green_light,
             iconRes = android.R.drawable.sym_call_outgoing,
+            backgroundRes = android.R.drawable.btn_default,
         )
 
         assertEquals("Phone", tile.label)
@@ -29,5 +30,15 @@ class AppTileTest {
         assertEquals("Messages", tiles[1].label)
         assertEquals("Camera",   tiles[2].label)
         assertEquals("Claude",   tiles[3].label)
+    }
+
+    @Test
+    fun `AppTile_defaultTiles wires per-tile background drawables`() {
+        val tiles = AppTile.defaultTiles()
+
+        assertEquals(R.drawable.tile_phone_bg,    tiles[0].backgroundRes)
+        assertEquals(R.drawable.tile_messages_bg, tiles[1].backgroundRes)
+        assertEquals(R.drawable.tile_camera_bg,   tiles[2].backgroundRes)
+        assertEquals(R.drawable.tile_claude_bg,   tiles[3].backgroundRes)
     }
 }

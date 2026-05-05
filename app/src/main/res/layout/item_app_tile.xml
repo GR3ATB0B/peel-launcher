@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/tile_card"
+    <FrameLayout
+        android:id="@+id/tile_root"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="12dp"
-        app:cardBackgroundColor="@color/tile_phone"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
+        android:layout_margin="0dp"
+        android:background="@drawable/tile_phone_bg"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,11 +21,10 @@
 
         <ImageView
             android:id="@+id/tile_icon"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="@dimen/tile_icon_size"
+            android:layout_height="@dimen/tile_icon_size"
             android:layout_gravity="center"
             android:contentDescription="@null"
-            android:src="@drawable/ic_phone"
-            app:tint="@color/peel_icon" />
-    </com.google.android.material.card.MaterialCardView>
+            android:src="@drawable/ic_phone" />
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
