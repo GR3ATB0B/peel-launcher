@@ -10,9 +10,11 @@ import android.provider.Settings
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.SeekBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
 import kotlin.math.abs
 
 @SuppressLint("ClickableViewAccessibility")
@@ -25,7 +27,9 @@ class ControlCenterActivity : AppCompatActivity() {
         val scrim = findViewById<View>(R.id.control_scrim)
         val panel = findViewById<View>(R.id.control_panel)
 
-        scrim.setOnClickListener { finishWithFade() }
+        animatePanelIn(scrim, panel)
+
+        scrim.setOnClickListener { dismiss(scrim, panel) }
         panel.setOnClickListener { /* consume */ }
 
         val slop = ViewConfiguration.get(this).scaledTouchSlop * 4f
@@ -36,7 +40,7 @@ class ControlCenterActivity : AppCompatActivity() {
                     MotionEvent.ACTION_DOWN -> downY = event.y
                     MotionEvent.ACTION_UP -> {
                         if (downY - event.y > slop && abs(downY - event.y) > slop) {
-                            finishWithFade()
+                            dismiss(scrim, panel)
                             return true
                         }
                         v?.performClick()
@@ -80,15 +84,16 @@ class ControlCenterActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
 
-        val silentBtn = findViewById<MaterialButton>(R.id.silent_toggle)
+        val silentRow = findViewById<View>(R.id.silent_toggle)
+        val silentState = findViewById<TextView>(R.id.silent_toggle_state)
         fun refreshSilent() {
-            silentBtn.text = getString(
+            silentState.setText(
                 if (audio.ringerMode == AudioManager.RINGER_MODE_SILENT) R.string.silent_mode_on
                 else R.string.silent_mode_off
             )
         }
         refreshSilent()
-        silentBtn.setOnClickListener {
+        silentRow.setOnClickListener {
             try {
                 audio.ringerMode = if (audio.ringerMode == AudioManager.RINGER_MODE_NORMAL)
                     AudioManager.RINGER_MODE_SILENT
@@ -99,24 +104,62 @@ class ControlCenterActivity : AppCompatActivity() {
                 startActivity(Intent("android.settings.NOTIFICATION_POLICY_ACCESS_SETTINGS"))
             }
         }
+        attachChipPress(silentRow)
 
-        findViewById<MaterialButton>(R.id.wifi_btn).setOnClickListener {
-            startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+        val wifi = findViewById<View>(R.id.wifi_btn)
+        wifi.setOnClickListener { startActivity(Intent(Settings.ACTION_WIFI_SETTINGS)) }
+        attachChipPress(wifi)
+
+        val bt = findViewById<View>(R.id.bluetooth_btn)
+        bt.setOnClickListener { startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS)) }
+        attachChipPress(bt)
+
+        val settings = findViewById<View>(R.id.settings_btn)
+        settings.setOnClickListener { startActivity(Intent(Settings.ACTION_SETTINGS)) }
+        attachChipPress(settings)
+    }
+
+    private fun animatePanelIn(scrim: View, panel: View) {
+        scrim.alpha = 0f
+        panel.post {
+            panel.translationY = -panel.height.toFloat()
+            panel.animate()
+                .translationY(0f)
+                .setDuration(220L)
+                .setInterpolator(DecelerateInterpolator())
+                .start()
+            scrim.animate()
+                .alpha(1f)
+                .setDuration(220L)
+                .start()
         }
-        findViewById<MaterialButton>(R.id.bluetooth_btn).setOnClickListener {
-            startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
-        }
-        findViewById<MaterialButton>(R.id.settings_btn).setOnClickListener {
-            startActivity(Intent(Settings.ACTION_SETTINGS))
+    }
+
+    private fun dismiss(scrim: View, panel: View) {
+        panel.animate()
+            .translationY(-panel.height.toFloat())
+            .setDuration(180L)
+            .setInterpolator(AccelerateInterpolator())
+            .start()
+        scrim.animate()
+            .alpha(0f)
+            .setDuration(180L)
+            .withEndAction { finish(); overridePendingTransition(0, 0) }
+            .start()
+    }
+
+    private fun attachChipPress(view: View) {
+        view.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> v.animate().scaleX(0.96f).scaleY(0.96f).alpha(0.85f).setDuration(120L).start()
+                MotionEvent.ACTION_UP,
+                MotionEvent.ACTION_CANCEL -> v.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(180L).start()
+            }
+            false
         }
     }
 
     private fun currentSystemBrightness(): Int =
         try { Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS) }
         catch (e: Settings.SettingNotFoundException) { 128 }
-
-    private fun finishWithFade() {
-        finish()
-        overridePendingTransition(0, android.R.anim.fade_out)
-    }
 }

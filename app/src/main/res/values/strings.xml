@@ -5,9 +5,10 @@
     <string name="control_center_title">Control Center</string>
     <string name="brightness">Brightness</string>
     <string name="volume">Volume</string>
-    <string name="silent_mode_off">Silent: Off</string>
-    <string name="silent_mode_on">Silent: On</string>
     <string name="wifi">Wi-Fi</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="settings">Settings</string>
+    <string name="silent_mode">Silent mode</string>
+    <string name="silent_mode_off">Off</string>
+    <string name="silent_mode_on">On</string>
 </resources>

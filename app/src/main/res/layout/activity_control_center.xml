@@ -11,63 +11,30 @@
         android:id="@+id/control_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/peel_panel"
+        android:background="@drawable/cc_panel_bg"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:paddingTop="@dimen/cc_panel_padding_top"
+        android:paddingHorizontal="@dimen/cc_panel_padding_horizontal"
+        android:paddingBottom="@dimen/cc_panel_padding_bottom"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/control_placeholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/control_center_title"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/wifi_btn"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
-                android:layout_weight="1"
-                android:text="@string/wifi" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/bluetooth_btn"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="3dp"
-                android:layout_weight="1"
-                android:text="@string/bluetooth" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/settings_btn"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_weight="1"
-                android:text="@string/settings" />
-        </LinearLayout>
+        <View
+            android:layout_width="@dimen/cc_drag_handle_width"
+            android:layout_height="@dimen/cc_drag_handle_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/cc_drag_handle_margin_bottom"
+            android:background="@drawable/cc_drag_handle" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/brightness"
-            android:textColor="@android:color/white" />
+            android:textAppearance="@style/TextAppearance.Peel.Caption" />
 
         <SeekBar
             android:id="@+id/brightness_seek"
+            style="@style/Widget.Peel.Slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="255" />
@@ -75,21 +42,73 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/volume"
-            android:textColor="@android:color/white" />
+            android:textAppearance="@style/TextAppearance.Peel.Caption" />
 
         <SeekBar
             android:id="@+id/volume_seek"
+            style="@style/Widget.Peel.Slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/silent_toggle"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/silent_mode_off" />
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/wifi_btn"
+                style="@style/Widget.Peel.Chip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/chip_gap"
+                android:layout_weight="1"
+                android:text="@string/wifi" />
+
+            <TextView
+                android:id="@+id/bluetooth_btn"
+                style="@style/Widget.Peel.Chip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/chip_gap"
+                android:layout_weight="1"
+                android:text="@string/bluetooth" />
+
+            <TextView
+                android:id="@+id/settings_btn"
+                style="@style/Widget.Peel.Chip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/settings" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/silent_toggle"
+            style="@style/Widget.Peel.Chip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:text="@string/silent_mode"
+                android:textAppearance="@style/TextAppearance.Peel.Chip" />
+
+            <TextView
+                android:id="@+id/silent_toggle_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:text="@string/silent_mode_off"
+                android:textAppearance="@style/TextAppearance.Peel.Body"
+                android:textColor="@color/peel_text_muted" />
+        </FrameLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
