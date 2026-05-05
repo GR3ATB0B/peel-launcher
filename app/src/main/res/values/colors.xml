@@ -20,7 +20,4 @@
     <!-- Material defaults retained for system surfaces -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <!-- Temporary legacy alias so AppTile.kt still compiles until Task 3 renames SMS -> Messages. Removed in Task 3. -->
-    <color name="tile_sms">@color/tile_messages</color>
 </resources>

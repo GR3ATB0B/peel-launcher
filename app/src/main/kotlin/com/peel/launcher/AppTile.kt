@@ -18,10 +18,10 @@ data class AppTile(
                 iconRes = R.drawable.ic_phone,
             ),
             AppTile(
-                label = "SMS",
+                label = "Messages",
                 packageName = "com.simplemobiletools.smsmessenger",
-                colorRes = R.color.tile_sms,
-                iconRes = R.drawable.ic_sms,
+                colorRes = R.color.tile_messages,
+                iconRes = R.drawable.ic_messages,
             ),
             AppTile(
                 label = "Camera",

@@ -25,9 +25,9 @@ class AppTileTest {
         val tiles = AppTile.defaultTiles()
 
         assertEquals(4, tiles.size)
-        assertEquals("Phone",  tiles[0].label)
-        assertEquals("SMS",    tiles[1].label)
-        assertEquals("Camera", tiles[2].label)
-        assertEquals("Claude", tiles[3].label)
+        assertEquals("Phone",    tiles[0].label)
+        assertEquals("Messages", tiles[1].label)
+        assertEquals("Camera",   tiles[2].label)
+        assertEquals("Claude",   tiles[3].label)
     }
 }
